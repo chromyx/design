@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendix - HR Management System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">
+                    <i class="bi bi-calendar-check"></i>
+                    <h1>Attendix</h1>
+                </div>
+                <p class="login-subtitle">HR Management System</p>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                
+                <button type="submit" class="btn btn--primary btn--full-width login-btn">
+                    Sign In
+                </button>
+            </form>
+            
+            <div class="login-demo">
+                <p>Demo Accounts:</p>
+                <div class="demo-accounts">
+                    <button class="demo-btn" data-username="admin" data-password="admin123">
+                        <strong>Administrator</strong><br>
+                        <small>admin / admin123</small>
+                    </button>
+                    <button class="demo-btn" data-username="hr_manager" data-password="hr123">
+                        <strong>HR Manager</strong><br>
+                        <small>hr_manager / hr123</small>
+                    </button>
+                    <button class="demo-btn" data-username="john_doe" data-password="emp123">
+                        <strong>Employee</strong><br>
+                        <small>john_doe / emp123</small>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div class="app-container hidden" id="appContainer">
+        <!-- Desktop Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="bi bi-calendar-check"></i>
+                </div>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav">
+                <!-- Navigation items will be populated by JavaScript based on role -->
+            </nav>
+            <div class="sidebar-footer">
+                <button class="nav-item" id="logoutBtn" title="Logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- Mobile Sidebar -->
+        <aside class="sidebar-mobile" id="sidebarMobile">
+            <div class="sidebar-header">
+                <div class="logo">Attendix</div>
+                <button class="btn-close-mobile" id="closeMobileSidebar">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNavMobile">
+                <!-- Mobile navigation items will be populated by JavaScript -->
+            </nav>
+        </aside>
+
+        <!-- Mobile Bottom Navigation -->
+        <nav class="bottom-nav" id="bottomNav">
+            <!-- Bottom navigation items will be populated by JavaScript -->
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Mobile Header -->
+            <header class="mobile-header">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="bi bi-list"></i>
+                </button>
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                <div class="user-info">
+                    <span class="user-name" id="userName"></span>
+                    <span class="user-role" id="userRole"></span>
+                </div>
+            </header>
+
+            <!-- Dashboard Page -->
+            <div class="page active" id="dashboard">
+                <div class="page-header">
+                    <h1 id="dashboardTitle">Dashboard</h1>
+                    <div class="welcome-text">
+                        Welcome back, <span id="welcomeUser"></span>
+                    </div>
+                </div>
+                
+                <!-- Metrics Cards -->
+                <div class="metrics-grid" id="metricsGrid">
+                    <!-- Metrics will be populated by JavaScript based on role -->
+                </div>
+
+                <!-- Dashboard Cards -->
+                <div class="dashboard-cards" id="dashboardCards">
+                    <!-- Cards will be populated by JavaScript based on role -->
+                </div>
+            </div>
+
+            <!-- Employees Page -->
+            <div class="page" id="employees">
+                <div class="page-header">
+                    <h1>Employees</h1>
+                    <div class="page-actions">
+                        <input type="text" class="form-control search-input" placeholder="Search employees..." id="employeeSearch">
+                        <select class="form-control" id="departmentFilter">
+                            <option value="">All Departments</option>
+                            <option value="IT">IT</option>
+                            <option value="Human Resources">Human Resources</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Sales">Sales</option>
+                        </select>
+                        <button class="btn btn--primary" id="addEmployeeBtn">
+                            <i class="bi bi-plus"></i> Add Employee
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="employees-grid" id="employeesGrid">
+                    <!-- Employee cards will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Attendance Page -->
+            <div class="page" id="attendance">
+                <div class="page-header">
+                    <h1>Attendance</h1>
+                    <div class="page-actions">
+                        <input type="date" class="form-control" id="attendanceDate">
+                        <button class="btn btn--primary" id="clockInOutBtn">
+                            <i class="bi bi-clock"></i> Clock In/Out
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card__body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr id="attendanceTableHeader">
+                                        <!-- Headers will be populated by JavaScript -->
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceTableBody">
+                                    <!-- Records will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaves Page -->
+            <div class="page" id="leaves">
+                <div class="page-header">
+                    <h1>Leave Management</h1>
+                    <div class="page-actions">
+                        <select class="form-control" id="leaveStatusFilter">
+                            <option value="">All Status</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                        <button class="btn btn--primary" id="requestLeaveBtn">
+                            <i class="bi bi-calendar-plus"></i> Request Leave
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card__body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr id="leavesTableHeader">
+                                        <!-- Headers will be populated by JavaScript -->
+                                    </tr>
+                                </thead>
+                                <tbody id="leavesTableBody">
+                                    <!-- Records will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payroll Page -->
+            <div class="page" id="payroll">
+                <div class="page-header">
+                    <h1>Payroll Management</h1>
+                    <div class="page-actions">
+                        <select class="form-control" id="payrollMonthFilter">
+                            <option value="03-2024">March 2024</option>
+                            <option value="02-2024">February 2024</option>
+                            <option value="01-2024">January 2024</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card__body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr id="payrollTableHeader">
+                                        <!-- Headers will be populated by JavaScript -->
+                                    </tr>
+                                </thead>
+                                <tbody id="payrollTableBody">
+                                    <!-- Records will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Page (Employee only) -->
+            <div class="page" id="profile">
+                <div class="page-header">
+                    <h1>My Profile</h1>
+                </div>
+                
+                <div class="profile-container">
+                    <div class="card">
+                        <div class="card__body">
+                            <div class="profile-header">
+                                <div class="profile-avatar" id="profileAvatar"></div>
+                                <div class="profile-info">
+                                    <h3 id="profileName"></h3>
+                                    <p id="profilePosition"></p>
+                                    <p id="profileDepartment"></p>
+                                </div>
+                            </div>
+                            <div class="profile-details">
+                                <div class="profile-detail">
+                                    <label>Email</label>
+                                    <span id="profileEmail"></span>
+                                </div>
+                                <div class="profile-detail">
+                                    <label>Employee ID</label>
+                                    <span id="profileId"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
